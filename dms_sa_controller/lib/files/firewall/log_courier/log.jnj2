@@ -1,0 +1,12 @@
+{
+    "network": {
+        "servers": [ "{{logstash_ip}}:{{logstash_receiver_port}}" ],
+        "transport": "tcp"
+    },
+    "files": [
+        {
+            "paths": [ "/var/log/syslog" ],
+            "fields": { "vmtype": "firewall" }
+        }
+        ]
+}

@@ -1,0 +1,9 @@
+[Core]
+Name = kafka_collector
+Module = kafka_collector
+
+[Documentation]
+Author = Hao Yan
+Version = 0.1
+Website =
+Description =

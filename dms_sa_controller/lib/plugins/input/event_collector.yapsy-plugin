@@ -1,0 +1,9 @@
+[Core]
+Name = event_collector
+Module = event_collector
+
+[Documentation]
+Author = Hao Yan
+Version = 0.1
+Website =
+Description =

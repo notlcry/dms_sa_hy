@@ -1,0 +1,9 @@
+[Core]
+Name = service_handler
+Module = servicehandler
+
+[Documentation]
+Author = Hao Yan
+Version = 0.1
+Website =
+Description =

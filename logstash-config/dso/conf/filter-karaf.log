@@ -1,0 +1,39 @@
+filter{
+  if [type] == "dso_karaf"{
+     mutate{
+       add_field => {"src" => "dso"}
+     }
+     multiline {
+        pattern => "(^.+Exception: .+)|(^\s+at .+)|(^\s+... \d+ more)|(^\s*Caused by:.+)"
+        what => "previous"
+     }
+    if "multiline" in [tags]{
+        mutate{
+          add_field => {"loglevel" => "Error"}
+        }
+    }
+    else{
+     if [message] =~ /^</ or [message] =~ /^>/ {
+        drop{}
+     }
+     else{
+      grok{
+        match => { "message" => "%{TIME}%{SPACE}\|%{SPACE}%{WORD:loglevel}%{SPACE}\|%{SPACE}%{GREEDYDATA:module1}" }
+        tag_on_failure => ["karaf_parse_failure"]
+      }
+     }
+    }        
+    if [loglevel] == "Error"{
+        mutate{
+           remove_field => ["whitelist"]
+        }
+        mutate{
+          add_field => {"whitelist" => ["accountId","host","item","severity","message"]}
+          add_field => {"accountId" => "dso"}
+          add_field => {"item" => "logexception"}
+          add_field => {"serverity" => "Critical"}
+         }
+    }
+    
+  }
+}

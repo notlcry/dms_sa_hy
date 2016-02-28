@@ -1,0 +1,15 @@
+{
+    "network": {
+        "servers": [ "{{logstash_ip}}:{{logstash_receiver_port}}" ],
+        "transport": "tcp"
+    },
+    "stdin": {
+        "codec":{
+                    "name": "multiline",
+                    "pattern": "(^[a-zA-Z.]+(?:Error|Exception): .+)|(^\\s+at .+)|(^\\s+... \\d+ more)|(^\\s*Caused by:.+)",
+                    "what": "previous",
+                    "previous timeout": "3s"
+                },
+        "fields": { "vmtype": "vr" }
+    }
+}
